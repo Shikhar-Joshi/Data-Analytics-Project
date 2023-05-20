@@ -29,12 +29,8 @@ GROUP BY 1;
     The query aims to determine the number of days each customer has visited the restaurant based on the data in the "sales" table. It selects the 
     "customer_id" column and uses the COUNT(DISTINCT order_date) function to count the distinct order dates for each customer as some cases a customer visited 
     multiple times within day. The results are grouped by the "customer_id" column. The query provides a result set with two columns: "customer_id" and 
-    "Number of days customer visited," representing each customer and the count of unique days they have visited the restaurant, respectively. By executing
-    this query, you can obtain the information on the number of days each customer has visited the restaurant.
+    "Number of days customer visited," representing each customer and the count of unique days they have visited the restaurant, respectively.
     
-    Here is some cases a customer visited multiple times within day so we need to use DISTINCT(inside COUNT) so that we can count multiple visit that happens 
-    in a day as one.
-
     Conclusion:
     A visited the restaurant for 4 days, B visited 6 days and C visited 2 days.
 */
@@ -55,6 +51,7 @@ GROUP BY customer_id, product_name;
     Explanation:
     This code uses a common table expression (CTE) to create a temporary result set called "order_sales_cte." It retrieves data from the "sales" and "menu" 
     tables and calculates the row number for each customer's order date using the DENSE_RANK() window function.
+    
     The main query then selects the customer ID and product name from the "order_sales_cte" table. It filters the results to only include the rows where the 
     row number is equal to 1, indicating the earliest order for each customer. Finally, the results are grouped by customer ID and product name.
     
@@ -75,10 +72,10 @@ LIMIT 1;
 
 /*
     Explanation:
-    This SQL query determines the product that has been ordered the most. It counts the occurrences of each 
-    product ID in the "sales" table, joins it with the "menu" table to retrieve the corresponding product names, and groups the results by product name. The 
-    query then sorts the results in descending order based on the count of product orders and limits the output to the top row. The final result includes the 
-    name of the most frequently ordered product and the count of times it has been ordered.
+    This SQL query determines the product that has been ordered the most. It counts the occurrences of each product ID in the "sales" table, joins it with the 
+    "menu" table to retrieve the corresponding product names, and groups the results by product name. The query then sorts the results in descending order 
+    based on the count of product orders and limits the output to the top row. The final result includes the name of the most frequently ordered product and 
+    the count of times it has been ordered.
     
     Conclusion:
     Most purchased item is ramen. It was purchased 8 times by all customers.
@@ -101,8 +98,10 @@ WHERE item_rank = 1;
     Explanation:
     I'm assuming that most popular item means the item which is purchased most number of times. This code determines the most popular item for each customer 
     by counting the occurrences of each product in the "sales" table. It joins the "sales" and "menu" tables, groups the results by customer and product, and 
-    assigns a rank to each combination based on the count. The final result displays the customer ID, product name, and order count for the item with the 
-    highest rank, representing the most popular item for each customer.
+    assigns a rank to each combination based on the count. 
+    
+    The final result displays the customer ID, product name, and order count for the item with the highest rank, representing the most popular item for each 
+    customer.
     
     Conclusion:
     - Customer with customer id A and C loves ramen.
@@ -127,7 +126,8 @@ WHERE item_rank = 1;
 /*
     Explanation:
     This code retrieves the first item ordered by each customer after they join the membership program. It joins the "sales" and "members" tables based on 
-    the customer ID, filters the orders to include only those made after the join date, and assigns a rank to each combination of customer and order date. 
+    the customer ID, filters the orders to include only those made after the join date, and assigns a rank to each combination of customer and order date.
+    
     The code then selects the customer ID and corresponding product name from the "menu" table for the items with the lowest rank, indicating the first 
     ordered item after joining.
     
@@ -270,8 +270,8 @@ SELECT * FROM Quick_Detail;
     order date, product name, price, and a column indicating whether the customer is a member or not. The "member" column is determined based on whether the 
     order date is greater than or equal to the customer's join date. 
 
-    The second part of the code simply selects all columns from the "Quick_Detail" view, effectively displaying the consolidated information from the joined tables.
-    By executing this code, you can view the details of the sales transactions, including the product details and membership status of each customer.
+    The second part of the code simply selects all columns from the "Quick_Detail" view, effectively displaying the consolidated information from the joined 
+    tables.
 */
 
 -- Rank All the things
@@ -297,6 +297,7 @@ SELECT * FROM Quick_Detail_Rank;
     In addition to the columns from the previous view, it includes a new column called "ranking." The "ranking" column is calculated using the DENSE_RANK() 
     window function and assigns a rank to each customer's order based on their order date, within the scope of their membership status. 
 
-    The second part of the code simply selects all columns from the "Quick_Detail_Rank" view, allowing you to view the detailed information along with the ranking
-    of each order. By executing this code, you can see the sales details, product information, membership status, and the ranking of orders for each customer.
+    The second part of the code simply selects all columns from the "Quick_Detail_Rank" view, allowing you to view the detailed information along with the
+    ranking of each order. By executing this code, you can see the sales details, product information, membership status, and the ranking of orders for each 
+    customer.
 */
